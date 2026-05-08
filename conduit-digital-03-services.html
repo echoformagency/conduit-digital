@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>White-Label Services &mdash; Conduit Digital</title>
+<meta name="description" content="GPS-powered paid search, paid social, programmatic, and SEO — all under your brand, all executed by a 100% U.S.-based team.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+
+:root{--navy:#002232;--black:#101010;--blue:#00A8E9;--orange:#F55B00;--bg:#FFFFFF;--bg-off:#F4F7F9;--bg-mid:#E8EEF2;--t1:#101010;--t2:#4A6070;--t3:#8FA8B8;--line:rgba(0,34,50,.09);--fd:'Poppins',sans-serif;--w:1240px;--p:72px}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--fd);background:var(--bg);color:var(--t1);overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.6}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(0,168,233,.25);border-radius:2px}
+/* SCROLL PROGRESS */
+#sp{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:7px;opacity:0;transition:opacity .3s;pointer-events:none}
+#sp.on{opacity:1;pointer-events:auto}
+.spd{width:7px;height:7px;border-radius:50%;background:var(--bg-mid);border:1.5px solid var(--t3);transition:all .25s;cursor:pointer}
+.spd.a{background:var(--navy);border-color:var(--navy);transform:scale(1.35)}
+/* BOTTOM BAR */
+#bb{position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--navy);color:#fff;padding:18px var(--p);display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform .4s cubic-bezier(.22,.68,0,1.2);border-top:1px solid rgba(255,255,255,.08)}
+#bb.on{transform:translateY(0)}
+.bb-t{font-size:15px;font-weight:600;color:rgba(255,255,255,.8)}
+.bb-t span{color:var(--blue)}
+.bb-x{background:transparent;color:rgba(255,255,255,.35);font-size:18px;padding:4px 10px;cursor:pointer;border:none;font-family:var(--fd);transition:color .15s}
+.bb-x:hover{color:#fff}
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;background:rgba(255,255,255,.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 var(--p);transition:box-shadow .3s}
+.ni{max-width:var(--w);margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between}
+.nlogo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nm{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--blue),#33C0F5);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:#fff}
+.nw{font-weight:800;font-size:15px;color:var(--navy);letter-spacing:-.3px}
+.nlinks{display:flex;gap:2px;align-items:center}
+.nl{font-size:13px;font-weight:500;color:var(--t2);padding:7px 12px;border-radius:6px;transition:all .15s;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.nl:hover{color:var(--navy);background:var(--bg-off)}
+.nl.active{color:var(--navy);font-weight:600}
+.ncaret{font-size:9px;opacity:.45;transition:transform .2s;margin-top:1px}
+/* Services dropdown */
+.ndrop{position:relative}
+.ndrop:hover .ncaret{transform:rotate(180deg)}
+.ndrop-menu{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-4px);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:200;min-width:280px}
+.ndrop:hover .ndrop-menu{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.ndrop-inner{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:0 8px 32px rgba(0,34,50,.10)}
+.ndrop-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;transition:background .15s;cursor:pointer}
+.ndrop-item:hover{background:var(--bg-off)}
+.ndrop-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.ndrop-title{font-size:13px;font-weight:600;color:var(--navy);line-height:1.2}
+.ndrop-sub{font-size:11.5px;color:var(--t3);margin-top:1px}
+.ndrop-divider{border:none;border-top:1px solid var(--line);margin:4px 0}
+.ndrop-all{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;color:var(--blue);transition:background .15s}
+.ndrop-all:hover{background:rgba(0,168,233,.06)}
+/* LAYOUT */
+.wrap{max-width:var(--w);margin:0 auto;padding:0 var(--p)}
+.sec{padding:96px 0}.sec-lg{padding:120px 0}.sec-sm{padding:64px 0}
+hr.ln{border:none;border-top:1px solid var(--line)}
+/* TYPE — 3 tiers, more contrast */
+.ey{font-size:10.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:14px}
+.ey.bl{color:var(--blue)}.ey.lt{color:rgba(255,255,255,.4)}.ey.ct{text-align:center}
+.h1{font-size:clamp(52px,6.5vw,88px);font-weight:900;line-height:.96;letter-spacing:-4px;color:var(--navy)}
+.h2{font-size:clamp(36px,4vw,58px);font-weight:800;line-height:1.04;letter-spacing:-2.2px;color:var(--navy)}
+.h3{font-size:clamp(22px,2.5vw,32px);font-weight:700;line-height:1.2;letter-spacing:-.8px;color:var(--navy)}
+.h4{font-size:17px;font-weight:700;line-height:1.35;color:var(--navy)}
+.cb{color:var(--blue)}.co{color:var(--orange)}.ci{color:#fff!important}
+.blg{font-size:20px;line-height:1.72;color:var(--t2)}
+.bmd{font-size:17px;line-height:1.76;color:var(--t2)}
+.bsm{font-size:14px;line-height:1.7;color:var(--t2)}
+.bxs{font-size:12.5px;line-height:1.65;color:var(--t3)}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:13px 26px;border-radius:100px;font-size:14px;font-weight:700;transition:all .18s;font-family:var(--fd);cursor:pointer;border:none}
+.bl-lg{padding:16px 36px;font-size:15.5px}
+.bl-sm{padding:9px 20px;font-size:13px}
+.bp{background:var(--orange);color:#fff}
+.bp:hover{background:#E54E00;transform:translateY(-2px);box-shadow:0 8px 28px rgba(245,91,0,.28)}
+.bg{background:transparent;color:var(--navy);border:1.5px solid var(--line)}
+.bg:hover{border-color:rgba(0,34,50,.25);background:var(--bg-off)}
+.bgi{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.22)}
+.bgi:hover{border-color:rgba(255,255,255,.48);background:rgba(255,255,255,.06)}
+.bw{background:#fff;color:var(--navy)}
+.bw:hover{background:var(--bg-off);transform:translateY(-1px)}
+/* PLACEHOLDER */
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg-off);border:1.5px dashed var(--bg-mid);position:relative;overflow:hidden}
+.ph-b{position:absolute;top:12px;left:12px;background:rgba(0,34,50,.55);color:rgba(255,255,255,.75);font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:5px;backdrop-filter:blur(4px)}
+.ph-i{font-size:28px;opacity:.3}
+.ph-l{font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);text-align:center;padding:0 16px}
+.ph-d{font-size:11.5px;color:var(--t3);text-align:center;line-height:1.55;padding:0 20px;max-width:260px}
+/* HERO */
+.hero{padding-top:68px;background:var(--bg);overflow:hidden}
+.hi{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center;min-height:calc(100vh - 68px);max-width:var(--w);margin:0 auto;padding:80px var(--p)}
+.hb{display:inline-flex;align-items:center;gap:8px;background:rgba(0,168,233,.07);border:1px solid rgba(0,168,233,.18);border-radius:100px;padding:5px 16px;font-size:12px;font-weight:600;color:var(--blue);margin-bottom:24px}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+.hsub{font-size:19px;line-height:1.74;color:var(--t2);max-width:480px;margin:24px 0 36px}
+.hact{display:flex;gap:12px;align-items:center;margin-bottom:48px}
+.hdiv{border:none;border-top:1px solid var(--line);margin-bottom:28px}
+.hproof{display:flex;gap:36px}
+.hpn{font-size:30px;font-weight:900;letter-spacing:-1.5px;color:var(--navy);line-height:1}
+.hpn span{color:var(--blue)}.hpl{font-size:12px;color:var(--t3);margin-top:4px;font-weight:500}
+.hr{position:relative}
+.hiw{border-radius:20px;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--line)}
+.hfl{position:absolute;bottom:28px;left:-36px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 24px;box-shadow:0 12px 40px rgba(0,34,50,.12);min-width:200px}
+.hfll{font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-bottom:5px}
+.hfln{font-size:32px;font-weight:900;letter-spacing:-2px;color:var(--navy);line-height:1}
+.hfln span{color:var(--blue)}.hfls{font-size:12px;color:var(--t2);margin-top:4px}
+/* TRUST */
+.trust{background:var(--bg-off);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px var(--p)}
+.ti{max-width:var(--w);margin:0 auto;display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
+.titem{font-size:12px;font-weight:600;color:var(--t2);letter-spacing:.3px}
+.tsep{width:3px;height:3px;border-radius:50%;background:var(--bg-mid)}
+/* WHY — full width centered */
+.why{background:var(--bg)}
+.why-hd{text-align:center;max-width:720px;margin:0 auto 64px}
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.witem{display:flex;gap:14px;align-items:flex-start;padding:22px;border-radius:12px;background:var(--bg-off);border:1px solid transparent;transition:all .2s}
+.witem:hover{border-color:var(--line);background:#fff;box-shadow:0 4px 20px rgba(0,34,50,.06)}
+.wix{width:22px;height:22px;border-radius:50%;flex-shrink:0;background:rgba(239,68,68,.1);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#DC2626;margin-top:1px}
+.wih{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px}
+/* FIT — navy */
+.fit{background:var(--navy)}
+.fit-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.fchks{margin-top:28px;display:flex;flex-direction:column;gap:12px}
+.fchk{display:flex;gap:11px;align-items:center;font-size:14px;color:rgba(255,255,255,.7)}
+.fci{color:var(--blue);font-size:15px;flex-shrink:0;font-weight:700}
+/* CHANGES — 3/5 asymmetric */
+.changes{background:var(--bg-off)}
+.changes-g{display:grid;grid-template-columns:.85fr 1.15fr;gap:80px;align-items:center}
+.clist{margin-top:32px;display:flex;flex-direction:column;gap:0}
+.citem{display:flex;gap:14px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line)}
+.citem:last-child{border-bottom:none;padding-bottom:0}
+.ciok{width:22px;height:22px;border-radius:50%;flex-shrink:0;background:rgba(0,168,233,.1);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:var(--blue);margin-top:1px}
+.cih{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px}
+/* HOW IT WORKS — sticky left */
+.hiws{background:var(--bg)}
+.hiws-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.hiws-l{position:sticky;top:100px}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:18px;padding:22px 0;border-bottom:1px solid var(--line);transition:opacity .3s}
+.step:last-child{border-bottom:none}
+.step.dim{opacity:.3}
+.sn{width:36px;height:36px;border-radius:50%;background:var(--bg-off);border:1.5px solid var(--line);color:var(--t3);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
+.step.active .sn{background:var(--navy);border-color:var(--navy);color:#fff}
+.stitle{font-size:16px;font-weight:700;color:var(--t2);margin-bottom:4px;transition:color .3s}
+.step.active .stitle{color:var(--navy)}
+.hnote{margin-top:20px;font-size:13.5px;font-weight:600;color:#0D9488;display:flex;align-items:center;gap:7px}
+/* SERVICES — 2x2 */
+.svs{background:var(--bg-off)}
+.sv-intro{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:end;margin-bottom:48px}
+.sv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.svc{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:36px;transition:all .2s}
+.svc:hover{box-shadow:0 8px 32px rgba(0,34,50,.08);transform:translateY(-3px);border-color:rgba(0,34,50,.15)}
+.svic{width:48px;height:48px;border-radius:12px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.ib{background:rgba(0,168,233,.09)}.in{background:rgba(0,34,50,.07)}.io{background:rgba(245,91,0,.08)}.it{background:rgba(13,148,136,.08)}
+.svt{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:8px}
+.svb{font-size:14px;line-height:1.7;color:var(--t2);margin-bottom:16px}
+.svben{font-size:12.5px;font-weight:600;color:var(--blue)}
+/* GPS — navy dark chapter */
+.gps{background:var(--navy)}
+.gps-g{display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:center}
+.gps-q{margin:28px 0;padding:20px 26px;border-left:3px solid var(--orange);background:rgba(255,255,255,.04);border-radius:0 10px 10px 0;font-size:16px;font-style:italic;color:rgba(255,255,255,.62);line-height:1.7}
+.gps-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.gps-tag{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:600;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.11);color:rgba(255,255,255,.65);transition:all .18s;cursor:default}
+.gps-tag:hover{background:rgba(255,255,255,.12);color:#fff}
+/* RESULTS — image-led cards */
+.res{background:var(--bg)}
+.res-intro{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:end;margin-bottom:48px}
+.cs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cs-card{border-radius:16px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;background:var(--bg);transition:all .22s;text-decoration:none;color:inherit}
+.cs-card:hover{box-shadow:0 10px 40px rgba(0,34,50,.10);transform:translateY(-4px);border-color:rgba(0,34,50,.16)}
+.cs-img{position:relative;overflow:hidden}
+.cs-metric-float{position:absolute;bottom:0;left:0;right:0;padding:20px;background:linear-gradient(to top,rgba(0,34,50,.88),transparent)}
+.cs-m-n{font-size:clamp(32px,4vw,48px);font-weight:900;letter-spacing:-2.5px;color:#fff;line-height:1}
+.cs-m-n span{color:var(--blue)}
+.cs-m-l{font-size:11.5px;color:rgba(255,255,255,.6);margin-top:3px;font-weight:500}
+.cs-body{padding:22px;flex:1;display:flex;flex-direction:column}
+.cs-tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 9px;border-radius:5px;background:rgba(0,168,233,.08);color:var(--blue);border:1px solid rgba(0,168,233,.15);margin-bottom:10px}
+.cs-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.cs-desc{font-size:13px;color:var(--t2);line-height:1.62;flex:1;margin-bottom:16px}
+.cs-stats{display:flex;gap:20px;padding-top:14px;border-top:1px solid var(--line);margin-bottom:14px}
+.cs-sn{font-size:20px;font-weight:800;letter-spacing:-1px;color:var(--navy);line-height:1}
+.cs-sn span{color:var(--blue)}
+.cs-sl{font-size:11px;color:var(--t3);margin-top:3px}
+.cs-link{font-size:13px;font-weight:700;color:var(--blue);display:flex;align-items:center;gap:5px}
+/* TESTI — one at a time */
+.testi{background:var(--bg-off)}
+.testi-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.tq{font-size:clamp(18px,2.2vw,24px);line-height:1.62;font-weight:500;color:var(--navy);font-style:italic;margin-bottom:28px;position:relative}
+.tq::before{content:'\201C';font-size:4em;line-height:0;vertical-align:-.4em;color:var(--blue);opacity:.18;font-family:Georgia,serif;margin-right:4px}
+.tstats{display:flex;gap:32px;margin-bottom:24px}
+.tsn{font-size:24px;font-weight:800;letter-spacing:-1px;color:var(--navy);line-height:1}
+.tsl{font-size:11.5px;color:var(--t3);margin-top:3px}
+.tauth{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid var(--line)}
+.tav{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff}
+.tr{font-size:13.5px;font-weight:700;color:var(--navy)}
+.tc{font-size:12px;color:var(--t3)}
+.tctls{display:flex;gap:8px;margin-top:24px}
+.tcbtn{width:36px;height:36px;border-radius:50%;background:var(--bg);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--t2);cursor:pointer;transition:all .18s;font-family:var(--fd)}
+.tcbtn:hover{border-color:var(--navy);color:var(--navy)}
+.tdots{display:flex;gap:6px;margin-top:20px}
+.tdot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .2s}
+.tdot.a{background:var(--navy);transform:scale(1.3)}
+.tph{width:100%;aspect-ratio:3/4;border-radius:20px;border:1px solid var(--line)}
+/* testi fade */
+.tfading{opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease}
+.tq,.tstats,.tauth{transition:opacity .3s ease,transform .3s ease}
+/* CTA */
+.ctas{background:var(--navy)}
+.ctai{text-align:center;padding:120px 0}
+.ctasub{color:rgba(255,255,255,.48);max-width:480px;margin:18px auto 40px;font-size:18px;line-height:1.7}
+.ctabtns{display:flex;gap:12px;justify-content:center}
+.ctatrust{margin-top:28px;font-size:12px;color:rgba(255,255,255,.2)}
+/* FOOTER */
+footer{background:var(--black);padding:64px var(--p) 32px}
+.ftg{max-width:var(--w);margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:48px}
+.ftb{font-weight:800;font-size:14.5px;color:#fff;margin-bottom:10px}
+.fttag{font-size:13px;color:rgba(255,255,255,.28);line-height:1.65;max-width:210px}
+.fthd{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px}
+.fta{display:block;font-size:13px;color:rgba(255,255,255,.45);margin-bottom:9px;text-decoration:none;transition:color .15s}
+.fta:hover{color:rgba(255,255,255,.82)}
+.ftbot{max-width:var(--w);margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)}
+.ftc{font-size:12px;color:rgba(255,255,255,.2)}
+.ftl{display:flex;gap:20px}
+.ftl a{font-size:12px;color:rgba(255,255,255,.2);text-decoration:none}.ftl a:hover{color:rgba(255,255,255,.5)}
+/* REVEAL */
+.fu{opacity:0;transform:translateY(20px);animation:fu .65s ease forwards}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}
+@keyframes fu{to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+
+
+
+/* WHY CONDUIT PAGE SPECIFIC */
+.page-hero{padding-top:68px;background:var(--bg-off)}
+.page-hero-in{max-width:var(--w);margin:0 auto;padding:80px var(--p) 72px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.breadcrumb{font-size:12px;font-weight:600;color:var(--t3);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.breadcrumb a{color:var(--t3);text-decoration:none;transition:color .15s}.breadcrumb a:hover{color:var(--navy)}.breadcrumb .sep{opacity:.4}
+/* DIFFERENTIATORS 3-col grid */
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.diff-card{background:var(--bg-off);border:1px solid var(--line);border-radius:16px;padding:32px;transition:all .2s}
+.diff-card:hover{background:#fff;box-shadow:0 6px 28px rgba(0,34,50,.07);border-color:rgba(0,34,50,.14)}
+.diff-icon{width:44px;height:44px;border-radius:11px;margin-bottom:18px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.diff-title{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:8px}
+.ib{background:rgba(0,168,233,.09)}.in{background:rgba(0,34,50,.07)}.io{background:rgba(245,91,0,.08)}.it{background:rgba(13,148,136,.08)}.ip{background:rgba(139,92,246,.08)}
+/* GPS STEPS */
+.gps-steps{display:flex;flex-direction:column;gap:0;margin-top:32px}
+.gps-step{display:flex;gap:18px;padding:22px 0;border-bottom:1px solid var(--line)}
+.gps-step:last-child{border-bottom:none}
+.gps-sn{width:36px;height:36px;border-radius:50%;background:rgba(0,168,233,.1);border:1px solid rgba(0,168,233,.25);color:var(--blue);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.gps-stitle{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.gps-proof{display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;color:var(--blue);background:rgba(0,168,233,.07);border:1px solid rgba(0,168,233,.15);border-radius:6px;padding:3px 9px}
+.gps-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.gps-tag{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:600;background:var(--bg-off);border:1px solid var(--line);color:var(--navy)}
+/* COMPARISON TABLE */
+.comp-wrap{background:var(--bg-off);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.comp-tbl{width:100%;border-collapse:collapse}
+.comp-tbl th{padding:14px 20px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--t3);border-bottom:1px solid var(--line);text-align:left}
+.comp-tbl th.cond{background:rgba(0,168,233,.07);color:var(--blue);text-align:center}
+.comp-tbl td{padding:14px 20px;font-size:13.5px;border-bottom:1px solid rgba(0,34,50,.05);color:var(--t2)}
+.comp-tbl td:first-child{font-weight:600;color:var(--navy);font-size:14px}
+.comp-tbl tr:last-child td{border-bottom:none}
+.comp-tbl tr:hover td{background:rgba(0,34,50,.018)}
+.coc{background:rgba(0,168,233,.05);text-align:center;font-weight:700;color:#0D9488}
+.othc{text-align:center;color:var(--t3);font-size:13px}
+/* PROOF STATS */
+.proof-band{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:0}
+.proof-cell{background:var(--bg);padding:28px 22px;text-align:center;transition:background .18s}
+.proof-cell:hover{background:var(--bg-off)}
+.proof-n{font-size:clamp(28px,3.5vw,44px);font-weight:900;letter-spacing:-2.5px;color:var(--navy);line-height:1;margin-bottom:6px}
+.proof-n span{color:var(--blue)}.proof-l{font-size:12.5px;color:var(--t3);font-weight:500}
+/* TESTIMONIAL PULL QUOTE */
+.pull-quote{border-left:3px solid var(--orange);padding:20px 28px;background:var(--bg-off);border-radius:0 12px 12px 0;margin:32px 0}
+.pull-q{font-size:17px;font-style:italic;color:var(--t2);line-height:1.7}
+.pull-attr{font-size:12.5px;font-weight:600;color:var(--t3);margin-top:10px}
+/* CTA SECTION */
+.ctas{background:var(--navy)}
+.ctai{text-align:center;padding:100px 0}
+.ctasub{color:rgba(255,255,255,.48);max-width:480px;margin:18px auto 40px;font-size:18px;line-height:1.7}
+.ctabtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.ctatrust{margin-top:28px;font-size:12px;color:rgba(255,255,255,.2)}
+/* FOOTER */
+footer{background:var(--black);padding:64px var(--p) 32px}
+.ftg{max-width:var(--w);margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:48px}
+.ftb{font-weight:800;font-size:14.5px;color:#fff;margin-bottom:10px}
+.fttag{font-size:13px;color:rgba(255,255,255,.28);line-height:1.65;max-width:210px}
+.fthd{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px}
+.fta{display:block;font-size:13px;color:rgba(255,255,255,.45);margin-bottom:9px;text-decoration:none;transition:color .15s}
+.fta:hover{color:rgba(255,255,255,.82)}
+.ftbot{max-width:var(--w);margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)}
+.ftc{font-size:12px;color:rgba(255,255,255,.2)}
+.ftl{display:flex;gap:20px}.ftl a{font-size:12px;color:rgba(255,255,255,.2);text-decoration:none}.ftl a:hover{color:rgba(255,255,255,.5)}
+/* SCROLL PROGRESS */
+#sp{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:7px;opacity:0;transition:opacity .3s;pointer-events:none}
+#sp.on{opacity:1;pointer-events:auto}
+.spd{width:7px;height:7px;border-radius:50%;background:var(--bg-mid);border:1.5px solid var(--t3);transition:all .25s;cursor:pointer}
+.spd.a{background:var(--navy);border-color:var(--navy);transform:scale(1.35)}
+
+
+
+/* SERVICES PARENT PAGE */
+.sv-unifier{background:var(--navy);padding:64px 0}
+.sv-unifier-in{max-width:var(--w);margin:0 auto;padding:0 var(--p);display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.gps-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.gps-pill{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:600;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.65)}
+/* SERVICE CARDS — large, outcome-led */
+.sv-cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.sv-card{background:var(--bg);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:all .22s}
+.sv-card:hover{box-shadow:0 12px 48px rgba(0,34,50,.10);transform:translateY(-4px);border-color:rgba(0,34,50,.16)}
+.sv-card-img{aspect-ratio:16/9;position:relative;overflow:hidden}
+.sv-card-stat{position:absolute;bottom:0;left:0;right:0;padding:20px 24px;background:linear-gradient(to top,rgba(0,34,50,.88),transparent)}
+.sv-card-stat-n{font-size:clamp(32px,4vw,52px);font-weight:900;letter-spacing:-2.5px;color:#fff;line-height:1}
+.sv-card-stat-n span{color:var(--blue)}
+.sv-card-stat-l{font-size:11.5px;color:rgba(255,255,255,.6);margin-top:3px;font-weight:500}
+.sv-card-body{padding:28px 28px 24px;flex:1;display:flex;flex-direction:column}
+.sv-card-ey{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+.sv-card-h{font-size:clamp(17px,1.8vw,22px);font-weight:700;color:var(--navy);margin-bottom:10px;letter-spacing:-.3px;line-height:1.25}
+.sv-card-ben{font-size:13px;font-weight:600;color:var(--blue);background:rgba(0,168,233,.07);border:1px solid rgba(0,168,233,.15);border-radius:8px;padding:9px 14px;margin-bottom:20px;display:flex;align-items:center;gap:7px}
+.sv-card-link{display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:700;color:var(--navy);margin-top:auto;padding-top:16px;border-top:1px solid var(--line);transition:gap .15s}
+.sv-card-link:hover{color:var(--blue)}
+/* CHILD PAGE SPECIFIC */
+.ch-hero-stat{position:absolute;bottom:28px;right:28px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 26px;box-shadow:0 12px 40px rgba(0,34,50,.14);min-width:180px;text-align:center}
+.ch-hero-stat-n{font-size:40px;font-weight:900;letter-spacing:-2.5px;color:var(--navy);line-height:1}
+.ch-hero-stat-n span{color:var(--blue)}
+.ch-hero-stat-l{font-size:11.5px;color:var(--t3);margin-top:5px;font-weight:500}
+/* WHAT WE ACTUALLY DO */
+.do-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:40px}
+.do-item{display:flex;gap:12px;align-items:flex-start;padding:18px;background:var(--bg-off);border:1px solid var(--line);border-radius:12px;transition:all .2s}
+.do-item:hover{background:#fff;box-shadow:0 4px 20px rgba(0,34,50,.06);border-color:rgba(0,34,50,.12)}
+.do-check{width:20px;height:20px;border-radius:50%;flex-shrink:0;background:rgba(0,168,233,.1);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:var(--blue);margin-top:1px}
+.do-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px}
+/* GPS FOR THIS CHANNEL */
+.gps-ch-steps{display:flex;flex-direction:column;gap:0}
+.gps-ch-step{display:flex;gap:16px;padding:22px 0;border-bottom:1px solid var(--line)}
+.gps-ch-step:last-child{border-bottom:none}
+.gps-ch-sn{width:34px;height:34px;border-radius:50%;background:rgba(0,168,233,.1);border:1px solid rgba(0,168,233,.25);color:var(--blue);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gps-ch-stitle{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px}
+/* VERTICAL PROOF CARDS */
+.vp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.vp-card{background:var(--bg-off);border:1px solid var(--line);border-radius:14px;padding:24px}
+.vp-n{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-2px;color:var(--navy);line-height:1;margin-bottom:6px}
+.vp-n span{color:var(--blue)}
+.vp-l{font-size:11.5px;color:var(--t3);font-weight:500;margin-bottom:14px}
+.vp-tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 9px;border-radius:5px;background:rgba(0,168,233,.08);color:var(--blue);border:1px solid rgba(0,168,233,.15);margin-bottom:10px}
+/* WHAT YOU CAN SELL */
+.sell-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px}
+.sell-item{padding:22px;background:var(--bg);border:1px solid var(--line);border-radius:12px}
+.sell-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+.sell-h{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:6px}
+/* OBJECTION BLOCK */
+.obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+.obj-card{padding:28px;background:var(--bg-off);border:1px solid var(--line);border-radius:14px}
+.obj-q{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:12px;font-style:italic}
+.obj-a{font-size:14px;line-height:1.7;color:var(--t2)}
+/* CTA SECTION */
+.ctas{background:var(--navy)}
+.ctai{text-align:center;padding:100px 0}
+.ctasub{color:rgba(255,255,255,.48);max-width:480px;margin:18px auto 40px;font-size:18px;line-height:1.7}
+.ctabtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.ctatrust{margin-top:28px;font-size:12px;color:rgba(255,255,255,.2)}
+/* FOOTER */
+footer{background:var(--black);padding:64px var(--p) 32px}
+.ftg{max-width:var(--w);margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:48px}
+.ftb{font-weight:800;font-size:14.5px;color:#fff;margin-bottom:10px}
+.fttag{font-size:13px;color:rgba(255,255,255,.28);line-height:1.65;max-width:210px}
+.fthd{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px}
+.fta{display:block;font-size:13px;color:rgba(255,255,255,.45);margin-bottom:9px;text-decoration:none;transition:color .15s}
+.fta:hover{color:rgba(255,255,255,.82)}
+.ftbot{max-width:var(--w);margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)}
+.ftc{font-size:12px;color:rgba(255,255,255,.2)}
+.ftl{display:flex;gap:20px}.ftl a{font-size:12px;color:rgba(255,255,255,.2);text-decoration:none}.ftl a:hover{color:rgba(255,255,255,.5)}
+/* RESPONSIVE */
+@media(max-width:900px){
+  :root{--p:24px}
+  .page-hero-in{grid-template-columns:1fr!important;padding:56px var(--p) 48px}
+  .page-hero-in>div:last-child{display:none}
+  .sv-unifier-in{grid-template-columns:1fr}
+  .sv-cards-grid{grid-template-columns:1fr}
+  .do-grid,.sell-grid,.obj-grid,.vp-grid{grid-template-columns:1fr}
+  .ftg{grid-template-columns:1fr 1fr;gap:32px}
+  .ctabtns{flex-direction:column;align-items:center}
+  #sp{display:none}
+}
+@media(max-width:600px){.ftg{grid-template-columns:1fr}}
+
+
+</style>
+</head>
+<body>
+<div id="sp">
+  <div class="spd" title="s-top"></div>
+  <div class="spd" title="s-cards"></div>
+  <div class="spd" title="s-why"></div>
+  <div class="spd" title="s-cta"></div>
+</div>
+<!-- BOTTOM BAR -->
+<div id="bb">
+  <p class="bb-t">Your agency. Your clients. Your credit. <span>Conduit handles the rest.</span></p>
+  <div style="display:flex;gap:10px;align-items:center">
+    <a class="btn bw bl-sm" href="/contact">Let&rsquo;s Talk &rarr;</a>
+    <button class="bb-x" id="bbx">&#x2715;</button>
+  </div>
+</div>
+<!-- NAV -->
+<nav id="nav">
+  <div class="ni">
+    <a class="nlogo" href="/"><div class="nm">C</div><span class="nw">Conduit Digital</span></a>
+    <div class="nlinks">
+      <a class="nl" href="/why-conduit">Why Conduit</a>
+      <div class="ndrop">
+        <a class="nl active" href="/services">Services <span class="ncaret">&#9660;</span></a>
+        <div class="ndrop-menu"><div class="ndrop-inner">
+          <a class="ndrop-item" href="/services/paid-search"><div class="ndrop-icon ib">&#128269;</div><div><div class="ndrop-title">Paid Search</div><div class="ndrop-sub">Google, Microsoft &amp; Shopping</div></div></a>
+          <a class="ndrop-item" href="/services/paid-social"><div class="ndrop-icon in">&#128172;</div><div><div class="ndrop-title">Paid Social</div><div class="ndrop-sub">Meta, LinkedIn, TikTok</div></div></a>
+          <a class="ndrop-item" href="/services/programmatic"><div class="ndrop-icon io">&#128225;</div><div><div class="ndrop-title">Programmatic</div><div class="ndrop-sub">Display, OTT/CTV, Pre-Roll, Audio</div></div></a>
+          <a class="ndrop-item" href="/services/seo"><div class="ndrop-icon it">&#128200;</div><div><div class="ndrop-title">SEO</div><div class="ndrop-sub">Technical, On-Page &amp; Content</div></div></a>
+          <hr class="ndrop-divider">
+          <a class="ndrop-all" href="/services"><span>All Services</span><span>&rarr;</span></a>
+        </div></div>
+      </div>
+      <a class="nl" href="/results">Results</a>
+      <a class="nl" href="/how-it-works">How It Works</a>
+      <a class="nl" href="/our-team">Our Team</a>
+    </div>
+    <a class="btn bp bl-sm" href="/contact">Let&rsquo;s Talk &rarr;</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero" id="s-top">
+  <div class="page-hero-in" style="display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:center;max-width:var(--w);margin:0 auto;padding:80px var(--p) 72px">
+    <div>
+      <div class="breadcrumb fu"><a href="/">Home</a> <span class="sep">/</span> Services</div>
+      <span class="ey fu">White-Label Services</span>
+      <h1 class="h1 fu d1">Offer everything.<br>Staff <span class="cb">nothing.</span></h1>
+      <p class="blg fu d2" style="margin-top:20px;max-width:500px">Four channels. One GPS-powered partner. Every campaign launches with a defined KPA &mdash; not a channel metric. U.S.-based team, invisible under your brand.</p>
+      <p style="font-size:13px;color:var(--t3);margin-top:12px;display:flex;align-items:flex-start;gap:7px"><span style="color:var(--blue);flex-shrink:0">&#128274;</span> Conduit has never taken a direct client. Agency-exclusive since 2014 &mdash; the structural alignment no other white-label can offer.</p>
+      <p style="font-size:12.5px;color:var(--t3);margin-bottom:24px;display:flex;align-items:center;gap:6px" class="fu d2"><span style="color:var(--blue)">&#10022;</span> Every service below is included, trackable, and tied to your clients&rsquo; P&amp;L from day one.</p>
+      <div class="fu d3" style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn bp bl-lg" href="#s-cards" onclick="document.getElementById('s-cards').scrollIntoView({behavior:'smooth'});return false">Explore Services &darr;</a>
+        <a class="btn bg bl-lg" href="/contact">Talk to Us</a>
+      </div>
+    </div>
+    <div class="fu d2">
+      <div style="position:relative">
+        <div class="ph" style="aspect-ratio:4/5;border-radius:20px;border:1px solid var(--line)">
+        <div class="ph-b" style="">&#128247; PHOTO DIRECTION</div>
+        <div class="ph-i" style="">&#128300;</div>
+        <div class="ph-l" style="">Services &mdash; Multi-Channel Dashboard</div>
+        <div class="ph-d" style="">Campaign analytics across all four channels visible on a real screen &mdash; or a Conduit team reviewing cross-channel performance. Shows unified strategy at a glance.</div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="ln">
+
+<!-- GPS UNIFIER STRIP — before cards, not after -->
+<div class="sv-unifier" id="s-why">
+  <div class="sv-unifier-in">
+    <div>
+      <span class="ey lt">Every Service. One Framework.</span>
+      <h2 class="h2 ci" style="margin-bottom:16px">Five vendors stitched together<br>or <span class="co">one partner who owns it all?</span></h2>
+      <p class="bmd" style="color:rgba(255,255,255,.55);max-width:440px">Every channel below runs on GPS &mdash; the same Goal Performance System, the same KPA accountability, the same P&amp;L-connected reporting. That&rsquo;s what makes one Conduit report more useful than five vendor dashboards.</p>
+      <div class="gps-pills">
+        <span class="gps-pill">Goal Setting before launch</span>
+        <span class="gps-pill">GTM + GA4 + CallRail included</span>
+        <span class="gps-pill">KPA accountability</span>
+        <span class="gps-pill">P&amp;L reporting</span>
+        <span class="gps-pill">Same Pod, every month</span>
+      </div>
+      <div style="margin-top:28px"><a class="btn bw" href="/why-conduit#s-gps">How GPS Works &rarr;</a></div>
+    </div>
+    <div>
+      <div class="ph" style="background:rgba(255,255,255,.04);border:1.5px dashed rgba(255,255,255,.1);aspect-ratio:1;border-radius:16px">
+        <div class="ph-b" style="background:rgba(255,255,255,.12)">&#128247; PHOTO DIRECTION</div>
+        <div class="ph-i" style="color:rgba(255,255,255,.3)">&#127919;</div>
+        <div class="ph-l" style="color:rgba(255,255,255,.3)">GPS &mdash; Unified Channel View</div>
+        <div class="ph-d" style="color:rgba(255,255,255,.22)">GPS brand visual or a team reviewing a multi-channel performance dashboard. Dark environment works well. Shows the unifying system across all channels.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICE CARDS -->
+<section class="sec-lg reveal" id="s-cards">
+  <div class="wrap">
+    <div style="text-align:center;max-width:620px;margin:0 auto 52px">
+      <span class="ey ct">The Channels</span>
+      <h2 class="h2">Four services.<br><span class="cb">Zero new hires.</span></h2>
+      <p class="blg" style="margin-top:16px">Pick the gap you need to close. Or offer all four. Each one is GPS-powered, U.S.-delivered, and built to produce results your clients can take to their board.</p>
+    </div>
+    <div class="sv-cards-grid">
+
+      <!-- PAID SEARCH -->
+      <div class="sv-card">
+        <div class="sv-card-img">
+          <div class="ph" style="aspect-ratio:16/9;background:linear-gradient(135deg,rgba(0,168,233,.12),rgba(0,168,233,.04))">
+        <div class="ph-b" style="">&#128247; PHOTO DIRECTION</div>
+        <div class="ph-i" style="">&#128269;</div>
+        <div class="ph-l" style="">Paid Search &mdash; High-Intent Context</div>
+        <div class="ph-d" style="">Someone searching on a device or a screen showing search campaign analytics. Intent, precision, conversion feel. Authentic &mdash; not stock.</div>
+      </div>
+          <div class="sv-card-stat">
+            <div class="sv-card-stat-n">3,342<span>%</span></div>
+            <div class="sv-card-stat-l">ROAS &mdash; Automotive dealer, 5 months</div>
+          </div>
+        </div>
+        <div class="sv-card-body">
+          <div class="sv-card-ey">Paid Search</div>
+          <div class="sv-card-h">Win the clients you&rsquo;re currently losing because you can&rsquo;t staff a search specialist.</div>
+          <p class="bsm" style="margin-bottom:14px">Google, Microsoft &amp; Shopping &mdash; built for conversion, not click volume. KPAs defined before a campaign launches. Results reported in revenue your clients recognize, not ROAS alone.</p>
+          <div class="sv-card-ben">&#8593; Close bigger accounts. Search is the channel every serious client expects.</div>
+          <a class="sv-card-link" href="/services/paid-search">
+            <span>Explore Paid Search</span>
+            <span style="font-size:18px">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- PAID SOCIAL -->
+      <div class="sv-card">
+        <div class="sv-card-img">
+          <div class="ph" style="aspect-ratio:16/9;background:linear-gradient(135deg,rgba(0,34,50,.08),rgba(0,34,50,.03))">
+        <div class="ph-b" style="">&#128247; PHOTO DIRECTION</div>
+        <div class="ph-i" style="">&#128172;</div>
+        <div class="ph-l" style="">Paid Social &mdash; Campaign Creative Context</div>
+        <div class="ph-d" style="">Social media campaign creative on screen or a team reviewing social analytics. Dynamic, modern. Shows Meta/LinkedIn/TikTok awareness without being stock.</div>
+      </div>
+          <div class="sv-card-stat">
+            <div class="sv-card-stat-n">-52<span>%</span></div>
+            <div class="sv-card-stat-l">Cost per lead &mdash; Healthcare group</div>
+          </div>
+        </div>
+        <div class="sv-card-body">
+          <div class="sv-card-ey">Paid Social</div>
+          <div class="sv-card-h">Give your clients&rsquo; social budgets a business case, not just a brand story.</div>
+          <p class="bsm" style="margin-bottom:14px">Meta, LinkedIn, TikTok &mdash; audience-first strategy tied to outcomes your clients can actually feel. Not engagement rates and impressions. Business metrics.</p>
+          <div class="sv-card-ben">&#8593; Turn social spend into proof that retains clients at renewal time.</div>
+          <a class="sv-card-link" href="/services/paid-social">
+            <span>Explore Paid Social</span>
+            <span style="font-size:18px">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- PROGRAMMATIC -->
+      <div class="sv-card">
+        <div class="sv-card-img">
+          <div class="ph" style="aspect-ratio:16/9;background:linear-gradient(135deg,rgba(245,91,0,.09),rgba(245,91,0,.03))">
+        <div class="ph-b" style="">&#128247; PHOTO DIRECTION</div>
+        <div class="ph-i" style="">&#128225;</div>
+        <div class="ph-l" style="">Programmatic &mdash; Display / CTV Context</div>
+        <div class="ph-d" style="">OTT/CTV or display advertising in a real context &mdash; a premium content environment with ads, or a team reviewing reach data. Premium inventory feel.</div>
+      </div>
+          <div class="sv-card-stat">
+            <div class="sv-card-stat-n">5<span>&#215;</span></div>
+            <div class="sv-card-stat-l">Audience reach &mdash; Nonprofit campaign</div>
+          </div>
+        </div>
+        <div class="sv-card-body">
+          <div class="sv-card-ey">Programmatic</div>
+          <div class="sv-card-h">Unlock the channel that lets you pitch brand budgets you couldn&rsquo;t win before.</div>
+          <p class="bsm" style="margin-bottom:14px">Display, OTT/CTV, Pre-Roll &amp; audio &mdash; the service that makes mid-funnel visible and opens budget conversations most agencies can&rsquo;t have. Premium inventory. Measurable outcomes.</p>
+          <div class="sv-card-ben">&#8593; Expand what your agency can sell &mdash; and deliver &mdash; overnight.</div>
+          <a class="sv-card-link" href="/services/programmatic">
+            <span>Explore Programmatic</span>
+            <span style="font-size:18px">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- SEO -->
+      <div class="sv-card">
+        <div class="sv-card-img">
+          <div class="ph" style="aspect-ratio:16/9;background:linear-gradient(135deg,rgba(13,148,136,.10),rgba(13,148,136,.03))">
+        <div class="ph-b" style="">&#128247; PHOTO DIRECTION</div>
+        <div class="ph-i" style="">&#128200;</div>
+        <div class="ph-l" style="">SEO &mdash; Organic Growth Analytics</div>
+        <div class="ph-d" style="">Organic traffic trending sharply upward on a real analytics screen. Long-term growth feel. Shows sustained, compounding value over time.</div>
+      </div>
+          <div class="sv-card-stat">
+            <div class="sv-card-stat-n">+280<span>%</span></div>
+            <div class="sv-card-stat-l">Organic traffic &mdash; Multi-location group</div>
+          </div>
+        </div>
+        <div class="sv-card-body">
+          <div class="sv-card-ey">SEO</div>
+          <div class="sv-card-h">Add recurring revenue that compounds &mdash; and makes every other channel more effective.</div>
+          <p class="bsm" style="margin-bottom:14px">Technical, on-page, and content &mdash; compounding visibility that makes paid spend go further and gives clients a reason to stay long after a campaign ends.</p>
+          <div class="sv-card-ben">&#8593; The retainer your clients keep renewing because it visibly moves every other metric.</div>
+          <a class="sv-card-link" href="/services/seo">
+            <span>Explore SEO</span>
+            <span style="font-size:18px">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MISSING CHANNEL NOTE -->
+    <div style="margin-top:32px;padding:24px 32px;background:var(--bg-off);border:1px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px">Need something outside these four?</div>
+        <p class="bsm">Tell us what your clients are asking for. If Conduit can deliver it, we&rsquo;ll say so. If we can&rsquo;t, we&rsquo;ll say that too.</p>
+      </div>
+      <a class="btn bg" href="/contact" style="white-space:nowrap">Talk to Us &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="ctas reveal" id="s-cta">
+  <div class="wrap">
+    <div class="ctai">
+      <span class="ey lt ct">Ready to Add a Channel?</span>
+      <h2 class="h2 ci">Which service do you want<br>to stop <span class="cb">worrying about?</span></h2>
+      <p class="ctasub">Pick the gap. Brief us on the client. We handle the rest &mdash; invisibly, under your brand, GPS-powered from day one.</p>
+      <div class="ctabtns">
+        <a class="btn bp bl-lg" href="/contact">Let&rsquo;s Talk &rarr;</a>
+        <a class="btn bgi bl-lg" href="/results">See Results by Channel</a>
+      </div>
+      <p style="font-size:13px;color:var(--t3);margin-top:10px;font-style:italic">Not the right fit? We&rsquo;ll tell you that on the call.</p>
+      <p class="ctatrust">AdWeek Recognized &middot; Google Partner &middot; Agency-exclusive since 2014 &middot; GPS-powered</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ftg">
+    <div>
+      <div class="ftb">Conduit Digital</div>
+      <p class="fttag">White-label execution built exclusively for agencies. GPS-powered. 100% U.S.-based.</p>
+      <p style="font-size:11px;color:rgba(255,255,255,.16);margin-top:14px">AdWeek Recognized &middot; Google Partner<br>Meta Partner &middot; Microsoft Partner</p>
+    </div>
+    <div><div class="fthd">Company</div>
+      <a class="fta" href="/why-conduit">Why Conduit</a>
+      <a class="fta" href="/why-conduit#s-gps">GPS System</a>
+      <a class="fta" href="/our-team">Our Team</a>
+    </div>
+    <div><div class="fthd">Services</div>
+      <a class="fta" href="/services/paid-search">Paid Search</a>
+      <a class="fta" href="/services/paid-social">Paid Social</a>
+      <a class="fta" href="/services/programmatic">Programmatic</a>
+      <a class="fta" href="/services/seo">SEO</a>
+    </div>
+    <div><div class="fthd">Work With Us</div>
+      <a class="fta" href="/how-it-works">How It Works</a>
+      <a class="fta" href="/results">Results</a>
+      <a class="fta" href="/contact">Let&rsquo;s Talk</a>
+    </div>
+  </div>
+  <div class="ftbot">
+    <span class="ftc">&copy; 2025 Conduit Digital. All rights reserved.</span>
+    <div class="ftl"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+  </div>
+</footer>
+<script>
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target)}}),{threshold:.07});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.style.boxShadow=scrollY>10?'0 1px 20px rgba(0,34,50,.08)':'none',{passive:true});
+const spSecs=["s-top", "s-cards", "s-why", "s-cta"];
+const spEl=document.getElementById('sp');
+const spDots=[...document.querySelectorAll('.spd')];
+spEl.querySelectorAll('.spd')[0]?.classList.add('a');
+function upSP(){
+  spEl.classList.toggle('on',scrollY>200);
+  let act=0;
+  spSecs.forEach((id,i)=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<=innerHeight*.45)act=i});
+  spDots.forEach((d,i)=>d.classList.toggle('a',i===act));
+}
+spDots.forEach((d,i)=>d.addEventListener('click',()=>document.getElementById(spSecs[i])?.scrollIntoView({behavior:'smooth'})));
+window.addEventListener('scroll',upSP,{passive:true});
+const bb=document.getElementById('bb');
+let bbDone=false;
+document.getElementById('bbx').addEventListener('click',()=>{bbDone=true;bb.classList.remove('on')});
+window.addEventListener('scroll',()=>{if(!bbDone)bb.classList.toggle('on',(scrollY+innerHeight)/document.body.scrollHeight>.78)},{passive:true});
+</script>
+</body>
+</html>

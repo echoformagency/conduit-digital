@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conduit Digital — White-Label Performance Marketing for Agencies</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#002232;--black:#101010;--blue:#00A8E9;--orange:#F55B00;--bg:#FFFFFF;--bg-off:#F4F7F9;--bg-mid:#E8EEF2;--t1:#101010;--t2:#4A6070;--t3:#8FA8B8;--line:rgba(0,34,50,.09);--fd:'Poppins',sans-serif;--w:1240px;--p:72px}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--fd);background:var(--bg);color:var(--t1);overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.6}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(0,168,233,.25);border-radius:2px}
+/* SCROLL PROGRESS */
+#sp{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:7px;opacity:0;transition:opacity .3s;pointer-events:none}
+#sp.on{opacity:1;pointer-events:auto}
+.spd{width:7px;height:7px;border-radius:50%;background:var(--bg-mid);border:1.5px solid var(--t3);transition:all .25s;cursor:pointer}
+.spd.a{background:var(--navy);border-color:var(--navy);transform:scale(1.35)}
+/* BOTTOM BAR */
+#bb{position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--navy);color:#fff;padding:18px var(--p);display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform .4s cubic-bezier(.22,.68,0,1.2);border-top:1px solid rgba(255,255,255,.08)}
+#bb.on{transform:translateY(0)}
+.bb-t{font-size:15px;font-weight:600;color:rgba(255,255,255,.8)}
+.bb-t span{color:var(--blue)}
+.bb-x{background:transparent;color:rgba(255,255,255,.35);font-size:18px;padding:4px 10px;cursor:pointer;border:none;font-family:var(--fd);transition:color .15s}
+.bb-x:hover{color:#fff}
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;background:rgba(255,255,255,.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 var(--p);transition:box-shadow .3s}
+.ni{max-width:var(--w);margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between}
+.nlogo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nm{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--blue),#33C0F5);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:#fff}
+.nw{font-weight:800;font-size:15px;color:var(--navy);letter-spacing:-.3px}
+.nlinks{display:flex;gap:2px;align-items:center}
+.nl{font-size:13px;font-weight:500;color:var(--t2);padding:7px 12px;border-radius:6px;transition:all .15s;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.nl:hover{color:var(--navy);background:var(--bg-off)}
+.nl.active{color:var(--navy);font-weight:600}
+.ncaret{font-size:9px;opacity:.45;transition:transform .2s;margin-top:1px}
+/* Services dropdown */
+.ndrop{position:relative}
+.ndrop:hover .ncaret{transform:rotate(180deg)}
+.ndrop-menu{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-4px);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:200;min-width:280px}
+.ndrop:hover .ndrop-menu{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.ndrop-inner{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:0 8px 32px rgba(0,34,50,.10)}
+.ndrop-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;transition:background .15s;cursor:pointer}
+.ndrop-item:hover{background:var(--bg-off)}
+.ndrop-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.ndrop-title{font-size:13px;font-weight:600;color:var(--navy);line-height:1.2}
+.ndrop-sub{font-size:11.5px;color:var(--t3);margin-top:1px}
+.ndrop-divider{border:none;border-top:1px solid var(--line);margin:4px 0}
+.ndrop-all{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;color:var(--blue);transition:background .15s}
+.ndrop-all:hover{background:rgba(0,168,233,.06)}
+/* LAYOUT */
+.wrap{max-width:var(--w);margin:0 auto;padding:0 var(--p)}
+.sec{padding:96px 0}.sec-lg{padding:120px 0}.sec-sm{padding:64px 0}
+hr.ln{border:none;border-top:1px solid var(--line)}
+/* TYPE — 3 tiers, more contrast */
+.ey{font-size:10.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:14px}
+.ey.bl{color:var(--blue)}.ey.lt{color:rgba(255,255,255,.4)}.ey.ct{text-align:center}
+.h1{font-size:clamp(52px,6.5vw,88px);font-weight:900;line-height:.96;letter-spacing:-4px;color:var(--navy)}
+.h2{font-size:clamp(36px,4vw,58px);font-weight:800;line-height:1.04;letter-spacing:-2.2px;color:var(--navy)}
+.h3{font-size:clamp(22px,2.5vw,32px);font-weight:700;line-height:1.2;letter-spacing:-.8px;color:var(--navy)}
+.h4{font-size:17px;font-weight:700;line-height:1.35;color:var(--navy)}
+.cb{color:var(--blue)}.co{color:var(--orange)}.ci{color:#fff!important}
+.blg{font-size:20px;line-height:1.72;color:var(--t2)}
+.bmd{font-size:17px;line-height:1.76;color:var(--t2)}
+.bsm{font-size:14px;line-height:1.7;color:var(--t2)}
+.bxs{font-size:12.5px;line-height:1.65;color:var(--t3)}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:13px 26px;border-radius:100px;font-size:14px;font-weight:700;transition:all .18s;font-family:var(--fd);cursor:pointer;border:none}
+.bl-lg{padding:16px 36px;font-size:15.5px}
+.bl-sm{padding:9px 20px;font-size:13px}
+.bp{background:var(--orange);color:#fff}
+.bp:hover{background:#E54E00;transform:translateY(-2px);box-shadow:0 8px 28px rgba(245,91,0,.28)}
+.bg{background:transparent;color:var(--navy);border:1.5px solid var(--line)}
+.bg:hover{border-color:rgba(0,34,50,.25);background:var(--bg-off)}
+.bgi{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.22)}
+.bgi:hover{border-color:rgba(255,255,255,.48);background:rgba(255,255,255,.06)}
+.bw{background:#fff;color:var(--navy)}
+.bw:hover{background:var(--bg-off);transform:translateY(-1px)}
+/* PLACEHOLDER */
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg-off);border:1.5px dashed var(--bg-mid);position:relative;overflow:hidden}
+.ph-b{position:absolute;top:12px;left:12px;background:rgba(0,34,50,.55);color:rgba(255,255,255,.75);font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:5px;backdrop-filter:blur(4px)}
+.ph-i{font-size:28px;opacity:.3}
+.ph-l{font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);text-align:center;padding:0 16px}
+.ph-d{font-size:11.5px;color:var(--t3);text-align:center;line-height:1.55;padding:0 20px;max-width:260px}
+/* HERO */
+.hero{padding-top:68px;background:var(--bg);overflow:hidden}
+.hi{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center;min-height:calc(100vh - 68px);max-width:var(--w);margin:0 auto;padding:80px var(--p)}
+.hb{display:inline-flex;align-items:center;gap:8px;background:rgba(0,168,233,.07);border:1px solid rgba(0,168,233,.18);border-radius:100px;padding:5px 16px;font-size:12px;font-weight:600;color:var(--blue);margin-bottom:24px}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+.hsub{font-size:19px;line-height:1.74;color:var(--t2);max-width:480px;margin:24px 0 36px}
+.hact{display:flex;gap:12px;align-items:center;margin-bottom:48px}
+.hdiv{border:none;border-top:1px solid var(--line);margin-bottom:28px}
+.hproof{display:flex;gap:36px}
+.hpn{font-size:30px;font-weight:900;letter-spacing:-1.5px;color:var(--navy);line-height:1}
+.hpn span{color:var(--blue)}.hpl{font-size:12px;color:var(--t3);margin-top:4px;font-weight:500}
+.hr{position:relative}
+.hiw{border-radius:20px;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--line)}
+.hfl{position:absolute;bottom:28px;left:-36px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 24px;box-shadow:0 12px 40px rgba(0,34,50,.12);min-width:200px}
+.hfll{font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-bottom:5px}
+.hfln{font-size:32px;font-weight:900;letter-spacing:-2px;color:var(--navy);line-height:1}
+.hfln span{color:var(--blue)}.hfls{font-size:12px;color:var(--t2);margin-top:4px}
+/* TRUST */
+.trust{background:var(--bg-off);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px var(--p)}
+.ti{max-width:var(--w);margin:0 auto;display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
+.titem{font-size:12px;font-weight:600;color:var(--t2);letter-spacing:.3px}
+.tsep{width:3px;height:3px;border-radius:50%;background:var(--bg-mid)}
+/* WHY — full width centered */
+.why{background:var(--bg)}
+.why-hd{text-align:center;max-width:720px;margin:0 auto 64px}
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.witem{display:flex;gap:14px;align-items:flex-start;padding:22px;border-radius:12px;background:var(--bg-off);border:1px solid transparent;transition:all .2s}
+.witem:hover{border-color:var(--line);background:#fff;box-shadow:0 4px 20px rgba(0,34,50,.06)}
+.wix{width:22px;height:22px;border-radius:50%;flex-shrink:0;background:rgba(239,68,68,.1);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#DC2626;margin-top:1px}
+.wih{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px}
+/* FIT — navy */
+.fit{background:var(--navy)}
+.fit-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.fchks{margin-top:28px;display:flex;flex-direction:column;gap:12px}
+.fchk{display:flex;gap:11px;align-items:center;font-size:14px;color:rgba(255,255,255,.7)}
+.fci{color:var(--blue);font-size:15px;flex-shrink:0;font-weight:700}
+/* CHANGES — 3/5 asymmetric */
+.changes{background:var(--bg-off)}
+.changes-g{display:grid;grid-template-columns:.85fr 1.15fr;gap:80px;align-items:center}
+.clist{margin-top:32px;display:flex;flex-direction:column;gap:0}
+.citem{display:flex;gap:14px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line)}
+.citem:last-child{border-bottom:none;padding-bottom:0}
+.ciok{width:22px;height:22px;border-radius:50%;flex-shrink:0;background:rgba(0,168,233,.1);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:var(--blue);margin-top:1px}
+.cih{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px}
+/* HOW IT WORKS — sticky left */
+.hiws{background:var(--bg)}
+.hiws-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.hiws-l{position:sticky;top:100px}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:18px;padding:22px 0;border-bottom:1px solid var(--line);transition:opacity .3s}
+.step:last-child{border-bottom:none}
+.step.dim{opacity:.3}
+.sn{width:36px;height:36px;border-radius:50%;background:var(--bg-off);border:1.5px solid var(--line);color:var(--t3);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
+.step.active .sn{background:var(--navy);border-color:var(--navy);color:#fff}
+.stitle{font-size:16px;font-weight:700;color:var(--t2);margin-bottom:4px;transition:color .3s}
+.step.active .stitle{color:var(--navy)}
+.hnote{margin-top:20px;font-size:13.5px;font-weight:600;color:#0D9488;display:flex;align-items:center;gap:7px}
+/* SERVICES — 2x2 */
+.svs{background:var(--bg-off)}
+.sv-intro{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:end;margin-bottom:48px}
+.sv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.svc{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:36px;transition:all .2s}
+.svc:hover{box-shadow:0 8px 32px rgba(0,34,50,.08);transform:translateY(-3px);border-color:rgba(0,34,50,.15)}
+.svic{width:48px;height:48px;border-radius:12px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.ib{background:rgba(0,168,233,.09)}.in{background:rgba(0,34,50,.07)}.io{background:rgba(245,91,0,.08)}.it{background:rgba(13,148,136,.08)}
+.svt{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:8px}
+.svb{font-size:14px;line-height:1.7;color:var(--t2);margin-bottom:16px}
+.svben{font-size:12.5px;font-weight:600;color:var(--blue)}
+/* GPS — navy dark chapter */
+.gps{background:var(--navy)}
+.gps-g{display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:center}
+.gps-q{margin:28px 0;padding:20px 26px;border-left:3px solid var(--orange);background:rgba(255,255,255,.04);border-radius:0 10px 10px 0;font-size:16px;font-style:italic;color:rgba(255,255,255,.62);line-height:1.7}
+.gps-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.gps-tag{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:600;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.11);color:rgba(255,255,255,.65);transition:all .18s;cursor:default}
+.gps-tag:hover{background:rgba(255,255,255,.12);color:#fff}
+/* RESULTS — image-led cards */
+.res{background:var(--bg)}
+.res-intro{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:end;margin-bottom:48px}
+.cs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cs-card{border-radius:16px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;background:var(--bg);transition:all .22s;text-decoration:none;color:inherit}
+.cs-card:hover{box-shadow:0 10px 40px rgba(0,34,50,.10);transform:translateY(-4px);border-color:rgba(0,34,50,.16)}
+.cs-img{position:relative;overflow:hidden}
+.cs-metric-float{position:absolute;bottom:0;left:0;right:0;padding:20px;background:linear-gradient(to top,rgba(0,34,50,.88),transparent)}
+.cs-m-n{font-size:clamp(32px,4vw,48px);font-weight:900;letter-spacing:-2.5px;color:#fff;line-height:1}
+.cs-m-n span{color:var(--blue)}
+.cs-m-l{font-size:11.5px;color:rgba(255,255,255,.6);margin-top:3px;font-weight:500}
+.cs-body{padding:22px;flex:1;display:flex;flex-direction:column}
+.cs-tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 9px;border-radius:5px;background:rgba(0,168,233,.08);color:var(--blue);border:1px solid rgba(0,168,233,.15);margin-bottom:10px}
+.cs-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.cs-desc{font-size:13px;color:var(--t2);line-height:1.62;flex:1;margin-bottom:16px}
+.cs-stats{display:flex;gap:20px;padding-top:14px;border-top:1px solid var(--line);margin-bottom:14px}
+.cs-sn{font-size:20px;font-weight:800;letter-spacing:-1px;color:var(--navy);line-height:1}
+.cs-sn span{color:var(--blue)}
+.cs-sl{font-size:11px;color:var(--t3);margin-top:3px}
+.cs-link{font-size:13px;font-weight:700;color:var(--blue);display:flex;align-items:center;gap:5px}
+/* TESTI — one at a time */
+.testi{background:var(--bg-off)}
+.testi-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.tq{font-size:clamp(18px,2.2vw,24px);line-height:1.62;font-weight:500;color:var(--navy);font-style:italic;margin-bottom:28px;position:relative}
+.tq::before{content:'\201C';font-size:4em;line-height:0;vertical-align:-.4em;color:var(--blue);opacity:.18;font-family:Georgia,serif;margin-right:4px}
+.tstats{display:flex;gap:32px;margin-bottom:24px}
+.tsn{font-size:24px;font-weight:800;letter-spacing:-1px;color:var(--navy);line-height:1}
+.tsl{font-size:11.5px;color:var(--t3);margin-top:3px}
+.tauth{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid var(--line)}
+.tav{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff}
+.tr{font-size:13.5px;font-weight:700;color:var(--navy)}
+.tc{font-size:12px;color:var(--t3)}
+.tctls{display:flex;gap:8px;margin-top:24px}
+.tcbtn{width:36px;height:36px;border-radius:50%;background:var(--bg);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--t2);cursor:pointer;transition:all .18s;font-family:var(--fd)}
+.tcbtn:hover{border-color:var(--navy);color:var(--navy)}
+.tdots{display:flex;gap:6px;margin-top:20px}
+.tdot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .2s}
+.tdot.a{background:var(--navy);transform:scale(1.3)}
+.tph{width:100%;aspect-ratio:3/4;border-radius:20px;border:1px solid var(--line)}
+/* testi fade */
+.tfading{opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease}
+.tq,.tstats,.tauth{transition:opacity .3s ease,transform .3s ease}
+/* CTA */
+.ctas{background:var(--navy)}
+.ctai{text-align:center;padding:120px 0}
+.ctasub{color:rgba(255,255,255,.48);max-width:480px;margin:18px auto 40px;font-size:18px;line-height:1.7}
+.ctabtns{display:flex;gap:12px;justify-content:center}
+.ctatrust{margin-top:28px;font-size:12px;color:rgba(255,255,255,.2)}
+/* FOOTER */
+footer{background:var(--black);padding:64px var(--p) 32px}
+.ftg{max-width:var(--w);margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:48px}
+.ftb{font-weight:800;font-size:14.5px;color:#fff;margin-bottom:10px}
+.fttag{font-size:13px;color:rgba(255,255,255,.28);line-height:1.65;max-width:210px}
+.fthd{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px}
+.fta{display:block;font-size:13px;color:rgba(255,255,255,.45);margin-bottom:9px;text-decoration:none;transition:color .15s}
+.fta:hover{color:rgba(255,255,255,.82)}
+.ftbot{max-width:var(--w);margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)}
+.ftc{font-size:12px;color:rgba(255,255,255,.2)}
+.ftl{display:flex;gap:20px}
+.ftl a{font-size:12px;color:rgba(255,255,255,.2);text-decoration:none}.ftl a:hover{color:rgba(255,255,255,.5)}
+/* REVEAL */
+.fu{opacity:0;transform:translateY(20px);animation:fu .65s ease forwards}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}
+@keyframes fu{to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div id="sp">
+  <div class="spd a" data-s="hero" title="Hero"></div>
+  <div class="spd" data-s="why" title="Why Conduit"></div>
+  <div class="spd" data-s="fit" title="Are We a Fit"></div>
+  <div class="spd" data-s="changes" title="What Changes"></div>
+  <div class="spd" data-s="hiw" title="How It Works"></div>
+  <div class="spd" data-s="risk" title="Accountability"></div>
+  <div class="spd" data-s="services" title="Services"></div>
+  <div class="spd" data-s="gps" title="GPS"></div>
+  <div class="spd" data-s="results" title="Results"></div>
+  <div class="spd" data-s="testi" title="Testimonials"></div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div id="bb">
+  <p class="bb-t">Your agency. Your clients. Your credit. <span>Conduit handles the rest.</span></p>
+  <div style="display:flex;gap:10px;align-items:center">
+    <button class="btn bw bl-sm">Let's Talk →</button>
+    <button class="bb-x" id="bbx">✕</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="ni">
+    <a class="nlogo" href="/">
+      <div class="nm">C</div>
+      <span class="nw">Conduit Digital</span>
+    </a>
+    <div class="nlinks">
+      <a class="nl" href="/why-conduit">Why Conduit</a>
+
+      <!-- Services — dropdown -->
+      <div class="ndrop">
+        <a class="nl" href="/services">
+          Services <span class="ncaret">▾</span>
+        </a>
+        <div class="ndrop-menu">
+          <div class="ndrop-inner">
+            <a class="ndrop-item" href="/services/paid-search">
+              <div class="ndrop-icon ib">🔍</div>
+              <div>
+                <div class="ndrop-title">Paid Search</div>
+                <div class="ndrop-sub">Google, Microsoft & Shopping</div>
+              </div>
+            </a>
+            <a class="ndrop-item" href="/services/paid-social">
+              <div class="ndrop-icon in">💬</div>
+              <div>
+                <div class="ndrop-title">Paid Social</div>
+                <div class="ndrop-sub">Meta, LinkedIn, TikTok</div>
+              </div>
+            </a>
+            <a class="ndrop-item" href="/services/programmatic">
+              <div class="ndrop-icon io">📡</div>
+              <div>
+                <div class="ndrop-title">Programmatic</div>
+                <div class="ndrop-sub">Display, OTT/CTV, Pre-Roll, Audio</div>
+              </div>
+            </a>
+            <a class="ndrop-item" href="/services/seo">
+              <div class="ndrop-icon it">📈</div>
+              <div>
+                <div class="ndrop-title">SEO</div>
+                <div class="ndrop-sub">Technical, On-Page & Content</div>
+              </div>
+            </a>
+            <hr class="ndrop-divider">
+            <a class="ndrop-all" href="/services">
+              <span>All Services</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <a class="nl" href="/results">Results</a>
+      <a class="nl" href="/how-it-works">How It Works</a>
+      <a class="nl" href="/our-team">Our Team</a>
+    </div>
+    <a class="btn bp bl-sm" href="/contact">Let's Talk →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hi">
+    <div>
+      <div class="hb fu"><span class="pulse"></span>Built exclusively for advertising agencies</div>
+      <h1 class="h1 fu d1">You&#x2019;ve been burned<br>by white-labels before.<br><span class="cb">Conduit is built<br>differently.</span></h1>
+      <p class="hsub fu d2">KPA-locked before a dollar moves. GTM, GA4, and CallRail configured before launch. BI-grade reporting in the language your clients' CFOs use. GPS-powered, 100% U.S.-based, invisible under your brand.</p>
+      <p style="font-size:12.5px;color:var(--t3);margin-bottom:20px;display:flex;align-items:center;gap:6px" class="fu d2"><span style="color:var(--blue)">&#10022;</span> Five-minute conversation. We&rsquo;ll tell you if it&rsquo;s a fit &mdash; honestly.</p>
+      <div class="hact fu d3">
+        <button class="btn bp bl-lg">Talk to Us &rarr;</button>
+        <button class="btn bg bl-lg" onclick="document.getElementById('hiw').scrollIntoView({behavior:'smooth'})">See How It Works</button>
+      </div>
+      <hr class="hdiv">
+      <div class="hproof fu d4">
+        <div><div class="hpn">94<span>%</span></div><div class="hpl">Renew after year one</div></div>
+        <div><div class="hpn">-52<span>%</span></div><div class="hpl">Avg. CPL reduction</div></div>
+        <div><div class="hpn">500<span>+</span></div><div class="hpl">Agency partners</div></div>
+      </div>
+    </div>
+    <div class="hr fu d2">
+      <div class="hiw" style="height:100%">
+        <div class="ph" style="height:100%;border-radius:20px">
+          <div class="ph-b">📸 PHOTO DIRECTION</div>
+          <div class="ph-i">👥</div>
+          <div class="ph-l">Hero — Team in Action</div>
+          <div class="ph-d">2–3 Conduit team members around a screen or whiteboard. Collaborative, natural light, genuine energy. Not posed. Office environment.</div>
+        </div>
+      </div>
+      <div class="hfl">
+        <div class="hfll">Live Campaign</div>
+        <div class="hfln">3,342<span>%</span></div>
+        <div class="hfls">ROAS — Automotive Dealer</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust">
+  <div class="ti">
+    <div class="titem" style="font-weight:700;color:var(--navy)">✦ AdWeek Recognized Agency</div><div class="tsep"></div>
+    <div class="titem">✦ Google Partner</div><div class="tsep"></div>
+    <div class="titem">✦ Meta Partner</div><div class="tsep"></div>
+    <div class="titem">✦ Microsoft Partner</div><div class="tsep"></div>
+    <div class="titem">✦ Agency-exclusive since 2014</div><div class="tsep"></div>
+    <div class="titem" style="color:var(--blue);font-weight:600">✦ KPA-locked before every campaign launches</div>
+  </div>
+</div>
+
+<!-- WHY — full width, centered, 2x2 grid -->
+<section class="sec-lg why reveal" id="why">
+  <div class="wrap">
+    <div class="why-hd">
+      <span class="ey ct">Sound Familiar?</span>
+      <h2 class="h2">Every white-label makes the same promises.<br><span class="cb">Here&rsquo;s why most of them break.</span></h2>
+      <p class="blg" style="margin-top:20px">If you&rsquo;ve been here before &mdash; a vendor who overpromised, underdelivered, and left you explaining their failures to your clients &mdash; you already know why this matters.</p>
+    </div>
+    <div class="why-grid">
+      <div class="witem">
+        <div class="wix">✕</div>
+        <div>
+          <div class="wih">No framework. Just optimization theater.</div>
+          <p class="bsm">Bids get tweaked. Goals don&rsquo;t get defined. &ldquo;Better performance&rdquo; means whatever the client decides this month &mdash; because nobody locked in a KPA before launch.</p>
+        </div>
+      </div>
+      <div class="witem">
+        <div class="wix">✕</div>
+        <div>
+          <div class="wih">Offshore teams, domestic price tags.</div>
+          <p class="bsm">Premium rates for a team that&rsquo;s never been to your client&rsquo;s market, doesn&rsquo;t understand their customers, and is handling your account between fifteen others.</p>
+        </div>
+      </div>
+      <div class="witem">
+        <div class="wix">✕</div>
+        <div>
+          <div class="wih">Reports that prove activity, not results.</div>
+          <p class="bsm">Impressions. Clicks. CTR. Meanwhile your client is calculating whether it&rsquo;s worth renewing &mdash; because nothing in the report connects to their actual revenue.</p>
+        </div>
+      </div>
+      <div class="witem">
+        <div class="wix">✕</div>
+        <div>
+          <div class="wih">Your vendor serves your competitors too.</div>
+          <p class="bsm">They take direct clients. There&rsquo;s no structural reason to protect your relationships. They&rsquo;re a vendor, not a partner &mdash; and that difference shows up when it matters most.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="ln">
+
+<!-- ARE WE A FIT — self-qualify while pain is fresh -->
+<section class="sec-lg fit reveal" id="fit">
+  <div class="wrap">
+    <div class="fit-g">
+      <div>
+        <span class="ey lt">Are We a Fit?</span>
+        <h2 class="h2 ci">Conduit isn't for every agency.<br><span class="cb">It might be exactly right for yours.</span></h2>
+        <p class="bmd" style="color:rgba(255,255,255,.52);margin-top:18px;max-width:420px">We work best with established agencies serious about growth — not just adding clients, but building an operation that can actually deliver for them.</p>
+        <div class="fchks">
+          <div class="fchk"><span class="fci">✓</span> You have clients and want to expand services without expanding your team</div>
+          <div class="fchk"><span class="fci">✓</span> You're running campaigns yourself and losing time you should spend on growth</div>
+          <div class="fchk"><span class="fci">✓</span> You want white-label results that hold up when a client asks a hard question</div>
+          <div class="fchk"><span class="fci">✓</span> You're ready to stop stitching together five vendors and get one unified answer</div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:36px;flex-wrap:wrap">
+          <button class="btn bp bl-lg">Five-Minute Call &rarr;</button>
+          <button class="btn bgi bl-lg" onclick="showAssess()">Take the 4-Question Check &rarr;</button>
+        </div>
+      </div>
+      <div>
+        <div class="ph" style="aspect-ratio:1;border-radius:16px;border-color:rgba(255,255,255,.08);background:rgba(255,255,255,.04)">
+          <div class="ph-b" style="background:rgba(255,255,255,.12)">📸 PHOTO DIRECTION</div>
+          <div class="ph-i" style="color:rgba(255,255,255,.3)">🤝</div>
+          <div class="ph-l" style="color:rgba(255,255,255,.3)">Partnership — Peer Conversation</div>
+          <div class="ph-d" style="color:rgba(255,255,255,.22)">Agency owner + Conduit rep in genuine conversation — boardroom or shared workspace. Confidence, peer-to-peer. Not a sales pitch visual.</div>
+        </div>
+
+<!-- AUDIT FIX 8: SELF-ASSESSMENT secondary conversion point -->
+<div id="assess-block" style="display:none;background:var(--navy);border-radius:20px;padding:48px;margin-top:48px">
+  <div style="display:flex;gap:6px;margin-bottom:28px" id="assess-prog">
+    <div style="height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.15)" class="adot"></div>
+    <div style="height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.15)" class="adot"></div>
+    <div style="height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.15)" class="adot"></div>
+    <div style="height:3px;flex:1;border-radius:2px;background:rgba(255,255,255,.15)" class="adot"></div>
+  </div>
+  <div id="assess-content">
+    <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:24px;line-height:1.4" id="assess-q">How are you currently handling digital execution for your clients?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" id="assess-opts"></div>
+  </div>
+  <div id="assess-result" style="display:none;text-align:center;padding:32px;background:rgba(255,255,255,.05);border-radius:14px;border:1px solid rgba(255,255,255,.1)">
+    <div style="font-size:32px;margin-bottom:16px">&#10022;</div>
+    <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px">You&rsquo;re the kind of agency Conduit is built for.</div>
+    <p style="font-size:14px;color:rgba(255,255,255,.55);margin-bottom:24px;line-height:1.65">Based on your answers, Conduit&rsquo;s GPS framework and dedicated Pod model directly addresses what you&rsquo;re working through. The next step is a five-minute conversation &mdash; we&rsquo;ll confirm the fit and be direct if it&rsquo;s not there.</p>
+    <button class="btn bp bl-lg">Book the 5-Minute Call &rarr;</button>
+  </div>
+</div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT CONDUIT CHANGES — asymmetric 3/5 split -->
+<section class="sec-lg changes reveal" id="changes">
+  <div class="wrap">
+    <div class="changes-g">
+      <div>
+        <div class="ph" style="aspect-ratio:4/5;border-radius:20px;border:1px solid var(--line)">
+          <div class="ph-b">📸 PHOTO DIRECTION</div>
+          <div class="ph-i">💻</div>
+          <div class="ph-l">GPS Dashboard / Analytics Screen</div>
+          <div class="ph-d">Clean campaign analytics on a large monitor — professional agency environment. Shows data in context, not a generic stock photo of a laptop.</div>
+        </div>
+      </div>
+      <div>
+        <span class="ey bl">What Conduit Changes</span>
+        <h2 class="h2" style="margin-bottom:0">One partner.<br>One report.<br><span class="cb">GPS from day one.</span></h2>
+        <div class="clist">
+          <div class="citem">
+            <div class="ciok">✓</div>
+            <div><div class="cih">Goals locked before a dollar moves</div><p class="bsm">KPAs defined and agreed before launch &mdash; every optimization decision made against that target, not the platform&rsquo;s preferred metric.</p><span style="display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;color:var(--blue);background:rgba(0,168,233,.07);border:1px solid rgba(0,168,233,.15);border-radius:6px;padding:3px 9px">&rarr; GTM + GA4 + CallRail built day one, tied to your client&rsquo;s actual P&amp;L</span></div>
+          </div>
+          <div class="citem">
+            <div class="ciok">✓</div>
+            <div><div class="cih">100% U.S.-based. Senior-level only.</div><p class="bsm">The same dedicated Pod every time &mdash; no juniors, no offshore, no shuffling between accounts.</p><span style="display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;color:var(--blue);background:rgba(0,168,233,.07);border:1px solid rgba(0,168,233,.15);border-radius:6px;padding:3px 9px">&rarr; Same dedicated Pod from month one to month twelve &mdash; no account shuffling</span></div>
+          </div>
+          <div class="citem">
+            <div class="ciok">✓</div>
+            <div><div class="cih">Reports your clients take to their board</div><p class="bsm">CAC, LTV, MER, ROI &mdash; connected to your clients&rsquo; P&amp;L, not screenshots from ad platforms.</p><span style="display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;color:var(--blue);background:rgba(0,168,233,.07);border:1px solid rgba(0,168,233,.15);border-radius:6px;padding:3px 9px">&rarr; BI-grade reporting delivered monthly &mdash; the report that ends renewal conversations</span></div>
+          </div>
+          <div class="citem">
+            <div class="ciok">✓</div>
+            <div><div class="cih">Structurally prevented from competing with you</div><p class="bsm">Conduit has never taken a direct client. Not policy &mdash; structural. Our revenue depends on yours growing.</p><span style="display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;color:var(--blue);background:rgba(0,168,233,.07);border:1px solid rgba(0,168,233,.15);border-radius:6px;padding:3px 9px">&rarr; Agency-only since 2014 &mdash; no exceptions, no &ldquo;strategic partnerships&rdquo; with end-clients</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="ln">
+
+<!-- HOW IT WORKS — sticky left -->
+<section class="sec-lg hiws reveal" id="hiw">
+  <div class="wrap">
+    <div class="hiws-g">
+      <div class="hiws-l">
+        <span class="ey">How It Works</span>
+        <h2 class="h2">The model is simple.<br><span class="cb">The execution is not.</span></h2>
+        <p class="bmd" style="margin-top:18px;max-width:360px">You close the client. You take the credit. Conduit runs everything in between — invisibly, under your brand.</p>
+        <div class="hnote"><span style="color:var(--blue)">✦</span> Conduit never contacts your clients. Founding principle, not policy.</div>
+        <div style="margin-top:32px"><button class="btn bp">Let's Talk →</button></div>
+      </div>
+      <div>
+        <div class="steps" id="steps">
+          <div class="step active" data-step="0">
+            <div class="sn">1</div>
+            <div><div class="stitle">You win the client.</div><p class="bsm" style="margin-top:4px">Brief us on the client, the goal, and the budget. You stay the hero — we stay invisible from day one.</p></div>
+          </div>
+          <div class="step" data-step="1">
+            <div class="sn">2</div>
+            <div><div class="stitle">We lock in the GPS.</div><p class="bsm" style="margin-top:4px">KPAs, tracking infrastructure, channel strategy — defined and agreed before a dollar moves. No guesswork.</p></div>
+          </div>
+          <div class="step" data-step="2">
+            <div class="sn">3</div>
+            <div><div class="stitle">Your Pod runs it daily.</div><p class="bsm" style="margin-top:4px">U.S.-based senior specialists making real decisions against real KPAs, every day.</p></div>
+          </div>
+          <div class="step" data-step="3">
+            <div class="sn">4</div>
+            <div><div class="stitle">You deliver results they can't ignore.</div><p class="bsm" style="margin-top:4px">CAC, LTV, MER, ROI — connected to your client's bottom line. You walk in with proof. Renewals happen.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="ln">
+
+
+<hr class="ln">
+
+<!-- AUDIT FIX 3: RISK REVERSAL — what accountability actually looks like -->
+<section class="sec reveal" id="risk" style="background:var(--bg-off)">
+  <div class="wrap">
+    <div style="text-align:center;max-width:620px;margin:0 auto 48px">
+      <span class="ey ct">What Happens If It&rsquo;s Not Working</span>
+      <h2 class="h2">Accountability isn&rsquo;t a promise.<br><span class="cb">It&rsquo;s built into how we work.</span></h2>
+      <p class="blg" style="margin-top:16px">The unspoken question every agency owner has: <em>&ldquo;What if I hand over my client relationships and Conduit drops the ball?&rdquo;</em> Here&rsquo;s the honest answer.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:0">
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line)">
+          <div style="width:36px;height:36px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;background:rgba(0,168,233,.08)">&#127919;</div>
+          <div><div class="h4" style="margin-bottom:4px">KPAs locked before launch &mdash; not negotiated after</div><p class="bsm">If the KPA isn&rsquo;t being hit, that&rsquo;s visible immediately &mdash; because we defined what &ldquo;working&rdquo; looks like before the campaign started. No hiding behind vanity metrics.</p></div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line)">
+          <div style="width:36px;height:36px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;background:rgba(0,168,233,.08)">&#128202;</div>
+          <div><div class="h4" style="margin-bottom:4px">Monthly reporting goes directly to your team</div><p class="bsm">You see everything we see. CAC, LTV, ROAS, appointment volume &mdash; connected to real business outcomes. You&rsquo;re never in the dark about what&rsquo;s happening on your accounts.</p></div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:20px 0">
+          <div style="width:36px;height:36px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;background:rgba(0,168,233,.08)">&#128274;</div>
+          <div><div class="h4" style="margin-bottom:4px">Your Pod lead is reachable and accountable</div><p class="bsm">One point of contact. If something isn&rsquo;t working, you&rsquo;re talking to the person who can actually fix it &mdash; not a rotating account manager escalation chain.</p></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:28px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:var(--t3);margin-bottom:6px;letter-spacing:.3px;text-transform:uppercase">Agency partners who renew</div>
+          <div style="font-size:52px;font-weight:900;letter-spacing:-3px;color:var(--navy);line-height:1">94<span style="color:var(--blue)">%</span></div>
+          <div style="font-size:12px;color:var(--t3);margin-top:6px">after their first full year</div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:28px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:var(--t3);margin-bottom:6px;letter-spacing:.3px;text-transform:uppercase">Average partner tenure</div>
+          <div style="font-size:52px;font-weight:900;letter-spacing:-3px;color:var(--navy);line-height:1">3.2<span style="color:var(--blue)">yr</span></div>
+          <div style="font-size:12px;color:var(--t3);margin-top:6px">across 500+ agency partners</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES — 2x2 -->
+<section class="sec-lg svs reveal" id="services">
+  <div class="wrap">
+    <div class="sv-intro">
+      <div>
+        <span class="ey">Services</span>
+        <h2 class="h2">Offer more.<br><span class="cb">Hire nobody.</span></h2>
+      </div>
+      <div>
+        <p class="blg">Search, Social, Programmatic, SEO — GPS-powered, under your brand, executed by U.S. specialists your clients will never meet.</p>
+        <div style="margin-top:24px"><button class="btn bg">Explore All Services →</button></div>
+      </div>
+    </div>
+    <div class="sv-grid">
+      <div class="svc">
+        <div class="svic ib">🔍</div>
+        <div class="svt">Paid Search</div>
+        <p class="svb">Google, Microsoft & Shopping — built for conversion, not click volume. KPAs defined before launch. Results reported in revenue, not ROAS alone.</p>
+        <div class="svben">↑ Win accounts that need a specialist you don't have to hire</div>
+      </div>
+      <div class="svc">
+        <div class="svic in">💬</div>
+        <div class="svt">Paid Social</div>
+        <p class="svb">Meta, LinkedIn, TikTok — audience-first creative strategy tied to outcomes your clients can actually feel, not just see in a dashboard.</p>
+        <div class="svben">↑ Give social budgets a business case, not just a brand story</div>
+      </div>
+      <div class="svc">
+        <div class="svic io">📡</div>
+        <div class="svt">Programmatic</div>
+        <p class="svb">Display, OTT/CTV, Pre-Roll & audio — the channel that makes mid-funnel visible and unlocks brand budgets you couldn't pitch before.</p>
+        <div class="svben">↑ Unlock bigger budgets with channels most agencies can't offer</div>
+      </div>
+      <div class="svc">
+        <div class="svic it">📈</div>
+        <div class="svt">SEO</div>
+        <p class="svb">Technical, on-page, and content — compounding visibility that makes every other channel more effective and every client harder to lose.</p>
+        <div class="svben">↑ Add recurring revenue that actually recurs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GPS — NAVY DARK CHAPTER -->
+<section class="sec-lg gps reveal" id="gps">
+  <div class="wrap">
+    <div class="gps-g">
+      <div>
+        <span class="ey lt">The GPS System</span>
+        <h2 class="h2 ci">Your client renewals stop being conversations.<br><span class="co">They become formalities.</span></h2>
+        <div class="gps-q">&ldquo;Before Conduit, every renewal was a negotiation. Now I walk in with a report that answers every question before the client asks it. We haven&rsquo;t lost a client since.&rdquo;</div>
+        <p class="bmd" style="color:rgba(255,255,255,.5);max-width:420px">GPS &mdash; our proprietary Goal Performance System &mdash; is the reason. Goals locked before spend. KPAs tracked against real business outcomes. Reporting in the language your clients&rsquo; leadership uses to measure success.</p>
+        <div class="gps-tags">
+          <span class="gps-tag">Goal Setting</span>
+          <span class="gps-tag">KPA Tracking</span>
+          <span class="gps-tag">GTM + GA4 + CallRail</span>
+          <span class="gps-tag">P&L Reporting</span>
+          <span class="gps-tag">CRM Integration</span>
+        </div>
+        <div style="margin-top:32px"><button class="btn bw bl-lg">Explore the GPS System →</button></div>
+      </div>
+      <div>
+        <div class="ph" style="aspect-ratio:1;border-radius:20px;background:rgba(255,255,255,.03);border:1.5px dashed rgba(255,255,255,.1)">
+          <div class="ph-b" style="background:rgba(255,255,255,.12)">📸 PHOTO DIRECTION</div>
+          <div class="ph-i" style="color:rgba(255,255,255,.3)">🎯</div>
+          <div class="ph-l" style="color:rgba(255,255,255,.3)">GPS System — Data Context</div>
+          <div class="ph-d" style="color:rgba(255,255,255,.22)">Team reviewing campaign performance data — dark environment works well here. OR GPS brand visual / system diagram if available from brand assets.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS — image-led cards -->
+<section class="sec-lg res reveal" id="results">
+  <div class="wrap">
+    <div class="res-intro">
+      <div>
+        <span class="ey">Results</span>
+        <h2 class="h2">Numbers that end<br>client-retention <span class="cb">conversations.</span></h2>
+      </div>
+      <p class="blg">Every case study started with a defined goal. GPS-powered execution across verticals and agency sizes.</p>
+    </div>
+    <div class="cs-grid">
+      <!-- Automotive -->
+      <a class="cs-card" href="#">
+        <div class="cs-img">
+          <div class="ph" style="aspect-ratio:16/9;background:linear-gradient(135deg,#DDE8EE,#C8D8E4)">
+            <div class="ph-b">📸 PHOTO DIRECTION</div>
+            <div class="ph-i">🚗</div>
+            <div class="ph-l">Automotive — Local Dealership</div>
+            <div class="ph-d">Dealership lot or showroom — real vehicles, authentic local feel. Not generic stock.</div>
+          </div>
+          <div class="cs-metric-float">
+            <div class="cs-m-n">-98<span>%</span></div>
+            <div class="cs-m-l">Cost per lead reduction</div>
+          </div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-tag">Automotive</div>
+          <div class="cs-title">Local Auto Dealership</div>
+          <p style="font-size:12.5px;font-style:italic;color:var(--t3);margin-bottom:8px;line-height:1.5;padding-left:8px;border-left:2px solid var(--bg-mid)">They were measuring page views and calling it performance. No KPAs. No conversion tracking. Brand spend with no attribution.</p>
+          <p class="cs-desc">Conduit rebuilt tracking from scratch, defined KPAs for the first time, and turned brand spend into a measurable lead engine in five months.</p>
+          <div class="cs-stats">
+            <div><div class="cs-sn">5<span>×</span></div><div class="cs-sl">Lead volume</div></div>
+            <div><div class="cs-sn">3,342<span>%</span></div><div class="cs-sl">ROAS</div></div>
+          </div>
+          <div class="cs-link">View Case Study →</div>
+        </div>
+      </a>
+      <!-- Healthcare -->
+      <a class="<a class="cs-card" href="/results/figo-pet-insurance">
+        <div class="cs-img">
+          <div class="ph" style="aspect-ratio:16/9;background:linear-gradient(135deg,rgba(0,168,233,.15),rgba(0,168,233,.06))">
+            <div class="ph-b">&#128247; PHOTO DIRECTION</div>
+            <div class="ph-i">&#128054;</div>
+            <div class="ph-l">Pet Insurance &mdash; Pet + Owner Context</div>
+            <div class="ph-d">A dog or cat with their owner &mdash; warm, authentic, not stock. Shows the actual customer Figo serves.</div>
+          </div>
+          <div class="cs-metric-float">
+            <div class="cs-m-n">3<span>&#215;</span></div>
+            <div class="cs-m-l">Policy purchases</div>
+          </div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-tag">Pet Insurance &middot; Search + Social + Programmatic</div>
+          <div class="cs-title">Figo Pet Insurance</div>
+          <p style="font-size:12.5px;font-style:italic;color:var(--t3);margin-bottom:8px;line-height:1.5;padding-left:8px;border-left:2px solid var(--bg-mid)">Previous agency hit $840 cost-per-purchase against a $300 target. Seven platforms running independently with no unified strategy.</p>
+          <p class="cs-desc">Conduit unified seven platforms under GPS, scaled budget 4x, and cut cost-per-purchase 75% &mdash; while tripling purchase volume and managing $5M in spend.</p>
+          <div class="cs-stats">
+            <div><div class="cs-sn">-75<span>%</span></div><div class="cs-sl">Cost per purchase</div></div>
+            <div><div class="cs-sn">4<span>&#215;</span></div><div class="cs-sl">Budget scaled</div></div>
+          </div>
+          <div class="cs-link">View Case Study &rarr;</div>
+        </div>
+      </a>
+      <!-- Agriculture -->
+      <a class="cs-card" href="#">
+        <div class="cs-img">
+          <div class="ph" style="aspect-ratio:16/9;background:linear-gradient(135deg,#E8E4D0,#D4CEB8)">
+            <div class="ph-b">📸 PHOTO DIRECTION</div>
+            <div class="ph-i">🌾</div>
+            <div class="ph-l">Agriculture — Wisconsin Brand Context</div>
+            <div class="ph-d">Wisconsin beef or agricultural landscape — real, warm, authentic. WBC branded if available.</div>
+          </div>
+          <div class="cs-metric-float">
+            <div class="cs-m-n">5<span>×</span></div>
+            <div class="cs-m-l">Follower growth in 12 months</div>
+          </div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-tag">Agriculture / Nonprofit</div>
+          <div class="cs-title">Wisconsin Beef Council</div>
+          <p style="font-size:12.5px;font-style:italic;color:var(--t3);margin-bottom:8px;line-height:1.5;padding-left:8px;border-left:2px solid var(--bg-mid)">14 years. 2,000 followers. The previous agency had been inflating CTR numbers for years. Nobody had questioned it.</p>
+          <p class="cs-desc">Conduit corrected the reporting, rebuilt from real data, and grew their audience 5&times; on a nonprofit budget in under 12 months.</p>
+          <div class="cs-stats">
+            <div><div class="cs-sn">35<span>×</span></div><div class="cs-sl">Time on site</div></div>
+            <div><div class="cs-sn">2<span>×</span></div><div class="cs-sl">Click-through rate</div></div>
+          </div>
+          <div class="cs-link">View Case Study →</div>
+        </div>
+      </a>
+    </div>
+    <div style="margin-top:40px;text-align:center"><button class="btn bg">View All Case Studies →</button></div>
+  </div>
+</section>
+
+<hr class="ln">
+
+<!-- TESTIMONIALS — one large, rotating -->
+<section class="sec-lg testi reveal" id="testi">
+  <div class="wrap">
+    <div class="testi-g">
+      <div>
+        <span class="ey">Agency Testimonials</span>
+        <h2 class="h2" style="margin-bottom:40px">Don't take our word for it.<br><span class="cb">Take theirs.</span></h2>
+        <div id="tq" class="tq">Before Conduit, every client onboarding was a negotiation about what success meant. GPS fixed that — and our clients stay because the proof is undeniable every month.</div>
+        <div id="ts" class="tstats">
+          <div><div class="tsn">+18mo</div><div class="tsl">Avg. client retention</div></div>
+          <div><div class="tsn">0</div><div class="tsl">Churned yr 1</div></div>
+        </div>
+        <div id="ta" class="tauth">
+          <div class="tav" id="tav" style="background:linear-gradient(135deg,#00A8E9,#33C0F5)">✦</div>
+          <div><div class="tr" id="tr">Founder</div><div class="tc" id="tc">12-person growth agency</div></div>
+        </div>
+        <div class="tctls">
+          <button class="tcbtn" onclick="prevT()">←</button>
+          <button class="tcbtn" onclick="nextT()">→</button>
+        </div>
+        <div class="tdots">
+          <div class="tdot a" onclick="goT(0)"></div>
+          <div class="tdot" onclick="goT(1)"></div>
+          <div class="tdot" onclick="goT(2)"></div>
+        </div>
+      </div>
+      <div>
+        <div id="tph" class="tph ph">
+          <div class="ph-b">📸 PHOTO DIRECTION</div>
+          <div class="ph-i">👤</div>
+          <div class="ph-l" id="tphl">Agency Founder — Candid Portrait</div>
+          <div class="ph-d" id="tphd">Founder in their agency — at their desk or in a team meeting. Candid, confident. Not a headshot. Shows their environment and scale.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="ctas reveal">
+  <div class="wrap">
+    <div class="ctai">
+      <span class="ey lt ct">Ready to Scale?</span>
+      <h2 class="h2 ci">Your agency's next chapter<br><span class="cb">doesn't require a new hire.</span></h2>
+      <p class="ctasub">Sell bigger. Deliver better. Retain longer. Five minutes tells us both whether this is the right fit.</p>
+      <div class="ctabtns">
+        <button class="btn bp bl-lg">Let's Talk →</button>
+        <button class="btn bgi bl-lg">Explore Services</button>
+      </div>
+      
+      <p style="font-size:13px;color:var(--t3);margin-top:10px;font-style:italic">Not the right fit? We&rsquo;ll tell you that on the call.</p>
+      <p class="ctatrust">Agency-exclusive · 100% U.S.-based · GPS-powered since 2014</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ftg">
+    <div>
+      <div class="ftb">Conduit Digital</div>
+      <p class="fttag">White-label execution built exclusively for agencies. GPS-powered. 100% U.S.-based.</p>
+      <p style="font-size:11px;color:rgba(255,255,255,.16);margin-top:14px">AdWeek Recognized · Google Partner<br>Meta Partner · Microsoft Partner</p>
+    </div>
+    <div>
+      <div class="fthd">Company</div>
+      <a class="fta" href="#">Why Conduit</a><a class="fta" href="#">GPS System</a><a class="fta" href="#">Our Team</a><a class="fta" href="#">Insights</a>
+    </div>
+    <div>
+      <div class="fthd">Services</div>
+      <a class="fta" href="#">Paid Search</a><a class="fta" href="#">Paid Social</a><a class="fta" href="#">Programmatic</a><a class="fta" href="#">SEO</a>
+    </div>
+    <div>
+      <div class="fthd">Work With Us</div>
+      <a class="fta" href="#">How It Works</a><a class="fta" href="#">Results</a><a class="fta" href="#">Are We a Fit?</a><a class="fta" href="#">Let's Talk</a>
+    </div>
+  </div>
+  <div class="ftbot">
+    <span class="ftc">© 2025 Conduit Digital. All rights reserved.</span>
+    <div class="ftl"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script>
+/* SCROLL REVEAL */
+const ro = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target)}}),{threshold:.07});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+/* NAV */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.style.boxShadow=scrollY>10?'0 1px 20px rgba(0,34,50,.08)':'none',{passive:true});
+
+/* SCROLL PROGRESS */
+const secs=['hero','why','fit','changes','hiw','risk','services','gps','results','testi'];
+const spEl=document.getElementById('sp');
+const dots=[...document.querySelectorAll('.spd')];
+function upSP(){
+  spEl.classList.toggle('on',scrollY>200);
+  let act=0;
+  secs.forEach((id,i)=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<=innerHeight*.45)act=i});
+  dots.forEach((d,i)=>d.classList.toggle('a',i===act));
+}
+dots.forEach((d,i)=>d.addEventListener('click',()=>document.getElementById(secs[i])?.scrollIntoView({behavior:'smooth'})));
+window.addEventListener('scroll',upSP,{passive:true});
+
+/* BOTTOM BAR */
+const bb=document.getElementById('bb');
+let bbDone=false;
+document.getElementById('bbx').addEventListener('click',()=>{bbDone=true;bb.classList.remove('on')});
+function upBB(){if(!bbDone)bb.classList.toggle('on',(scrollY+innerHeight)/document.body.scrollHeight>.78)}
+window.addEventListener('scroll',upBB,{passive:true});
+
+/* HOW IT WORKS step highlight */
+const steps=document.querySelectorAll('.step');
+function upSteps(){
+  steps.forEach(s=>{
+    const r=s.getBoundingClientRect(),c=r.top+r.height/2;
+    s.classList.toggle('active',c>innerHeight*.25&&c<innerHeight*.75);
+    s.classList.toggle('dim',!s.classList.contains('active')&&r.bottom<innerHeight*.4);
+  });
+}
+window.addEventListener('scroll',upSteps,{passive:true});
+
+/* RESULTS TABS — removed */
+
+/* TESTIMONIALS */
+const testis=[
+  {q:"Before Conduit, every client onboarding was a negotiation about what success meant. GPS fixed that — and our clients stay because the proof is undeniable every month.",s1n:"+18mo",s1l:"Avg. client retention",s2n:"0",s2l:"Churned yr 1",r:"Founder",c:"12-person growth agency",av:"linear-gradient(135deg,#00A8E9,#33C0F5)",pl:"Agency Founder — Candid Portrait",pd:"Founder in their agency — desk or team meeting. Candid, confident. Not a headshot. Shows their environment."},
+  {q:"We went from 18 to 47 active clients in 14 months. Zero new media hires. I used to lie awake wondering if execution would break as we scaled. I don't anymore.",s1n:"47",s1l:"Active clients in 14mo",s2n:"$0",s2l:"Added in headcount",r:"Director of Operations",c:"Mid-size full-service agency",av:"linear-gradient(135deg,#F55B00,#FF7A2A)",pl:"Operations Director — Agency Context",pd:"Director reviewing analytics or leading a team discussion. Shows scale and leadership. Professional agency environment."},
+  {q:"I moved our entire client base to Conduit after one quarter. The GPS reporting and U.S. team meant I could walk into any client meeting with full confidence. That's rare.",s1n:"1 qtr",s1l:"Full migration",s2n:"100%",s2l:"Client base transferred",r:"CEO",c:"Full-service agency, Southeast",av:"linear-gradient(135deg,#002232,#0a4a6a)",pl:"Agency CEO — Leadership Portrait",pd:"CEO in boardroom or executive office. Authoritative but approachable. Shows credibility and tenure."}
+];
+let cur=0;
+function renderT(i){
+  const t=testis[i];
+  ['tq','ts','ta'].forEach(id=>document.getElementById(id).classList.add('tfading'));
+  setTimeout(()=>{
+    document.getElementById('tq').textContent=t.q;
+    document.getElementById('ts').innerHTML=`<div><div class="tsn">${t.s1n}</div><div class="tsl">${t.s1l}</div></div><div><div class="tsn">${t.s2n}</div><div class="tsl">${t.s2l}</div></div>`;
+    document.getElementById('tav').style.background=t.av;
+    document.getElementById('tr').textContent=t.r;
+    document.getElementById('tc').textContent=t.c;
+    document.getElementById('tphl').textContent=t.pl;
+    document.getElementById('tphd').textContent=t.pd;
+    ['tq','ts','ta'].forEach(id=>document.getElementById(id).classList.remove('tfading'));
+    document.querySelectorAll('.tdot').forEach((d,idx)=>d.classList.toggle('a',idx===i));
+  },300);
+}
+function nextT(){cur=(cur+1)%testis.length;renderT(cur)}
+function prevT(){cur=(cur-1+testis.length)%testis.length;renderT(cur)}
+function goT(i){cur=i;renderT(i)}
+setInterval(nextT,7500);
+
+/* AUDIT FIX 8: SELF-ASSESSMENT */
+const assessQs=[
+  {q:"How are you currently handling digital execution for your clients?",opts:["Running it in-house — it’s eating our time","Using a white-label — but results are inconsistent","Multiple vendors — impossible to manage","Just starting to scale — looking at options"]},
+  {q:"What’s your biggest frustration with your current setup?",opts:["Reporting doesn’t connect to real business outcomes","Can’t trust the team handling my client accounts","Too much time managing vendors instead of growing","Not enough confidence to pitch bigger budgets"]},
+  {q:"How many active clients are you managing right now?",opts:["1–5 clients","6–15 clients","16–30 clients","30+ clients"]},
+  {q:"What would a great white-label partner actually change?",opts:["I could pitch services I can’t currently deliver","My clients would stay longer because results are provable","I’d stop losing time on execution and focus on growth","All of the above"]}
+];
+let assessStep=0;
+function showAssess(){
+  document.getElementById('assess-block').style.display='block';
+  document.getElementById('assess-block').scrollIntoView({behavior:'smooth',block:'center'});
+  renderAssess();
+}
+function renderAssess(){
+  const q=assessQs[assessStep];
+  document.getElementById('assess-q').textContent=q.q;
+  const opts=document.getElementById('assess-opts');opts.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.style.cssText='padding:14px 18px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:10px;font-size:13.5px;font-weight:500;color:rgba(255,255,255,.75);cursor:pointer;transition:all .18s;text-align:left;font-family:var(--fd)';
+    b.textContent=o;
+    b.onmouseover=()=>{b.style.background='rgba(0,168,233,.15)';b.style.borderColor='rgba(0,168,233,.4)';b.style.color='#fff'};
+    b.onmouseout=()=>{b.style.background='rgba(255,255,255,.06)';b.style.borderColor='rgba(255,255,255,.12)';b.style.color='rgba(255,255,255,.75)'};
+    b.onclick=()=>answerAssess(i);
+    opts.appendChild(b);
+  });
+  document.querySelectorAll('.adot').forEach((d,i)=>{d.style.background=i<assessStep?'var(--blue)':'rgba(255,255,255,.15)'});
+}
+function answerAssess(i){
+  assessStep++;
+  if(assessStep>=assessQs.length){
+    document.getElementById('assess-content').style.display='none';
+    document.querySelectorAll('.adot').forEach(d=>d.style.background='var(--blue)');
+    document.getElementById('assess-result').style.display='block';
+  } else {renderAssess();}
+}
+
+/* AUDIT FIX 7: Update scroll progress to include risk section */
+
+</script>
+</body>
+</html>
